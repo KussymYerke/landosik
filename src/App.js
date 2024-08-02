@@ -51,14 +51,19 @@ function EndingSection() {
   );
 }
 
-function Description({ title, description1, description2 }) {
+function Description({ title, description1, description2, largeDescription }) {
   return (
-    <section className="flex gap-5 justify-between w-full text-white max-md:flex-wrap max-md:pr-5 max-md:max-w-full">
-      <h2 className="self-start text-sm tracking-tight leading-5 uppercase">{title}</h2>
-      <div className="flex gap-5 text-base leading-5 max-md:flex-wrap max-md:max-w-full">
-        <p className="w-[268px]">{description1}</p>
-        <p className="flex-auto self-start">{description2}</p>
-      </div>
+    <section className="flex gap-5 justify-between text-white font-thin max-md:flex-wrap max-md:pr-5 max-md:max-w-full">
+      <h2 className="self-start opacity-30 text-sm tracking-tight leading-5 uppercase whitespace-nowrap">{title}</h2>
+      {(description1 || description2) && (
+        <div className="flex gap-5 opacity-70 text-base leading-5 max-md:flex-wrap max-md:max-w-full">
+          <p className="w-[268px]">{description1}</p>
+          <p className="w-[268px] flex-auto self-start">{description2}</p>
+        </div>
+      )}
+      {(largeDescription) && (
+        <h1 className="w-[80%] text-2xl uppercase font-extralight text-justify">{largeDescription}</h1>
+      )}
     </section>
   );
 }
@@ -90,7 +95,7 @@ function ProductCard({ src, title, description }) {
       <div className="flex-1 self-start text-base font-medium tracking-tight leading-5">
         {title}
       </div>
-      <div className="flex-1 text-sm leading-5">{description}</div>
+      <div className="flex-1 text-sm leading-5 opacity-60 font-thin">{description}</div>
     </div>
   );
 }
@@ -112,10 +117,10 @@ function ProductDetails({ title, description }) {
 
 function Products() {
   return (
-    <main className="px-5">
+    <main className="px-5 w-[80%] mx-auto">
       <div className="flex gap-5 max-md:flex-col max-md:gap-0">
         <section className="flex flex-col w-[18%] max-md:ml-0 max-md:w-full">
-          <h2 className="text-sm tracking-tight leading-5 text-white uppercase max-md:mt-10">
+          <h2 className="text-sm tracking-tight leading-5 text-white opacity-30 font-thin uppercase max-md:mt-10">
             Наши продукты
           </h2>
         </section>
@@ -127,7 +132,7 @@ function Products() {
                   loading="lazy"
                   src="https://cdn.builder.io/api/v1/image/assets/TEMP/9773c704b1b2bb7fde764fd1e6d5295cc07c2f194547fdc1f148c2b62ce1c74e?apiKey=f0565c05649044c09c5a9cc7ba5651cb&"
                   alt=""
-                  className="w-full aspect-square"
+                  className="w-full aspect-square rounded-xl"
                 />
               </div>
             </div>
@@ -154,12 +159,13 @@ function PartnerLogos() {
   ];
 
   return (
-    <section className="flex gap-5 justify-between mt-11 max-md:flex-wrap max-md:mt-10 max-md:max-w-full">
+    <section className="flex gap-5 justify-between mt-11 flex-wrap max-md:mt-10 mx-auto w-[80%]">
       {logos.map((logo, index) => (
+        console.log(logo, index),
         <Image
           key={index}
           src={logo}
-          widthClass={index === 2 || index === 6 ? "w-[217px]" : "w-[346px]"}
+          widthClass={ index === 2 || index === 6 ? "w-[217px]" : "w-[346px]"}
           heightClass={index === 1 || index === 4 ? "w-[217px]" : ""}
           aspectClass={
             index === 0 || index === 2 || index === 6 || index === 8
@@ -249,22 +255,24 @@ function App() {
         <SubSection />
         <EndingSection />
       </div>
-      <section className="flex flex-col mb-20 gap-10 mt-7 w-full max-md:px-5 max-md:max-w-full">
+      <section className="flex flex-col mb-20 gap-10 mt-7 w-[80%] mx-auto px-5">
         <Description
           title="Кто мы"
           description1="Alma Valley - это сообщество творческих индивидуумов, стремящихся к постоянному развитию и воплощению новаторских идей в жизнь."
           description2="Мы верим в силу инноваций и совместного творчества, чтобы преобразовывать мир вокруг нас."
         />
+      </section>
+      <section className="flex flex-col mb-50 gap-10 mt-7 w-[80%] mx-auto px-5">
         <Description
-          title="Что мы делаем"
-          description1="Мы занимаемся разработкой передовых технологий, обучаем новым навыкам и знаниям через образовательные программы и способствуем развитию робототехники."
+            title="Что мы делаем"
+            largeDescription="Мы занимаемся разработкой передовых технологий, обучаем новым навыкам и знаниям через образовательные программы и способствуем развитию робототехники."
         />
       </section>
-      <section className="mt-36 max-md:mt-10 max-md:max-w-full">
+      <section className="mt-36 max-md:mt-10 w-[80%] mx-auto">
         <div className="flex gap-5 max-md:flex-col max-md:gap-0">
           <Card imageSrc="https://cdn.builder.io/api/v1/image/assets/TEMP/a5e50f40de6a0b440b2b27cfd179d8a892c7f862015cdccafb75f4c82b21dc18?apiKey=f0565c05649044c09c5a9cc7ba5651cb&" title="Разработка" description="Мы занимаемся разработкой передовых технологий" />
           <div className="flex flex-col ml-5 w-3/12 max-md:ml-0 max-md:w-full">
-            <p className="text-base leading-5 text-white max-md:mt-6">
+            <p className="text-base leading-5 text-white font-thin max-md:mt-6 opacity-70">
               Наши направления включают в себя 3D-технологии и компьютерное зрение, открывая бесконечные возможности для инноваций.
             </p>
           </div>
@@ -272,7 +280,7 @@ function App() {
           <Card imageSrc="https://cdn.builder.io/api/v1/image/assets/TEMP/09f8a6f46f3d403c19d4a5604d696036b16d0f6a708c8412934b127eb461b814?apiKey=f0565c05649044c09c5a9cc7ba5651cb&" title="Робототехника" description="Мы способствуем развитию робототехники" />
         </div>
       </section>
-      <section className="self-center mt-6 max-w-full w-[562px]">
+      <section className="self-center mt-6 max-w-full w-[562px] mb-32">
         <div className="flex gap-5 max-md:flex-col max-md:gap-0">
           <Card imageSrc="https://cdn.builder.io/api/v1/image/assets/TEMP/1a39c3aebc356ba7458d76bdc769a7949f5a66702f8bab69e90679d277a67b10?apiKey=f0565c05649044c09c5a9cc7ba5651cb&" title="3д - технологии" description="Мы занимаемся разработкой передовых технологий" />
           <Card imageSrc="https://cdn.builder.io/api/v1/image/assets/TEMP/43ec0e662b10b0bbf0bda30db18b132834dca78d0ca0515c7c1cb4ad7d9791ad?apiKey=f0565c05649044c09c5a9cc7ba5651cb&" title="Компьютерное зрение" description="Мы занимаемся разработкой передовых технологий" />
@@ -280,17 +288,17 @@ function App() {
       </section>
       <Products/>
       <PartnerLogos />
-      <div className="flex gap-5 mt-40 text-white uppercase leading-[130%] max-md:flex-wrap max-md:mt-10 max-md:max-w-full">
-        <h2 className="self-start text-sm tracking-tight">Обратная связь</h2>
-        <h2 className="self-end text-3xl tracking-tighter max-md:max-w-full">
+      <div className="flex gap-5 mt-40 text-white uppercase leading-[130%] max-md:flex-wrap max-md:mt-10 w-[80%] mx-auto">
+        <h2 className="self-start text-sm tracking-tight font-thin opacity-30">Обратная связь</h2>
+        <h2 className="self-end text-3xl tracking-tighter max-md:max-w-full ml-72">
           Хотите стать частью нашего сообщества
         </h2>
       </div>
       <section className="self-end mt-3.5 mr-36 text-3xl tracking-tighter leading-10 text-white uppercase w-[854px] max-md:mr-2.5 max-md:max-w-full">
         и вместе с нами вносить вклад в развитие инноваций?
       </section>
-      <form className="flex flex-col px-20 mt-11 w-full max-md:px-5 max-md:mt-10 max-md:max-w-full">
-        <p className="flex-auto self-start leading-5 text-white">
+      <form className="flex justify-between mt-11 w-full max-md:px-5 max-md:mt-10 w-[80%] mx-auto">
+        <p className="flex-auto self-start leading-5 text-white opacity-50 w-[10%]">
           Оставьте свои контактные данные и мы свяжемся с вами в ближайшее время!
         </p>
         <ContactForm />
